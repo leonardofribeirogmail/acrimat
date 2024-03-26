@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/paginas/template/full.xhtml">
+
+	<ui:define name="css">
+		<h:outputStylesheet library="css" name="arquivo.css"/>
+	</ui:define>
+	<ui:define name="javascript">
+		<h:outputScript library="javascript" name="arquivo.js"/>
+	</ui:define>
+
+	<f:loadBundle basename="message" var="msg" />
+
+	<ui:define name="center">
+	
+		<pe:blockUI target="layoutCarregarCenter" widgetVar="blockUIDatatable"
+			fadeOut="0" autoShow="true">
+			<h:outputText value="Aguarde um momento" />
+		</pe:blockUI>
+	
+		<p:layout fullPage="true" stateful="false">
+		
+			<p:commandButton type="button" icon="fa fa-close" 
+				styleClass="button-close-arquivo"
+				onclick="parent.PF('lightBoxArquivo').hide()"/>
+		
+			<p:layoutUnit position="center" id="layoutCarregarCenter">
+		
+				<h:form id="form" enctype="multipart/form-data">
+					<p:messages id="messages" for="form" globalOnly="true"/>
+					<input type="hidden" jsf:value="#{arquivoBean.id}" value="#{param['id']}"
+						jsf:id="inputHiddenIdAssociado"/>
+				
+					<p:panelGrid layout="grid" columns="1" id="panelGridArquivoContent"
+						columnClasses="ui-lg-12 ui-g-12 ui-sm-12 ui-xs-12">
+						<p:panelGrid layout="grid" columnClasses="ui-lg-12 ui-g-12 ui-sm-12 ui-xs-12"
+							columns="1" style="width: 100%;" id="panelGridCarregarArquivo">
+							<h:panelGrid columns="1" style="width:100%;">
+								<input type="file" class="arquivo"/>
+								<h:outputText styleClass="spanarquivoerro hidden erro" 
+									value="#{msg['label.arquivoobrigatorio']}" />
+							</h:panelGrid>
+							
+		                	<p:commandButton type="button" value="Carregar" 
+		                		onclick="converter.toString()"/>
+			               
+			                <p:commandButton process="panelGridCarregarArquivo inputHiddenIdAssociado" 
+		                		actionListener="#{arquivoBean.salvarArquivo}" 
+		                		style="display:none; font-size:13px;"
+		                		update="panelGridArquivoContent" resetValues="true" 
+		                		styleClass="hiddenButtonCarregar"/>
+			                <input type="hidden" jsf:id="arquivoBase64" id="arquivoBase64" 
+		                		jsf:value="#{arquivoBean.arquivoBase64}"/>
+		                	<input type="hidden" jsf:id="arquivoNome" id="arquivoNome" 
+		                		jsf:value="#{arquivoBean.arquivoNome}"/>
+						</p:panelGrid>
+						<p:scrollPanel mode="native" style="height: 320px;">
+							<p:panelGrid layout="grid" columns="1" columnClasses="ui-lg-12 ui-g-12 ui-sm-12 ui-xs-12" 
+								id="panelGridArquivo" styleClass="panelGridArquivo">
+								<p:repeat var="arquivo" value="#{arquivoBean.arquivos}">
+									<p:panelGrid layout="grid" columns="2" columnClasses="ui-lg-9 ui-g-9 ui-sm-9 ui-xs-12 panelGridNoPadding,
+										ui-lg-3 ui-g-3 ui-sm-3 ui-xs-12 panelGridNoPadding" 
+										styleClass="ui-panelgrid-blank panelGridMaxHeight" style="height: 100%;">					
+										<p:panelGrid columns="1" style="height: 100%;">
+											<p:outputLabel value="#{arquivo.content.nome}"/>
+										</p:panelGrid>
+										<p:panelGrid columns="2" columnClasses="ui-lg-6 ui-g-6 ui-sm-6 ui-xs-6, 
+											ui-lg-6 ui-g-6 ui-sm-6 ui-xs-6" style="height: 100%;"
+											rendered="#{!arquivo.arquivoCorrompido}">
+											<p:commandButton icon="fa fa-download" ajax="false">
+												<p:fileDownload value="#{arquivo.stream}"/>
+											</p:commandButton>
+											<p:commandButton icon="fa fa-close" styleClass="cancelar"
+												actionListener="#{arquivoBean.excluirArquivo(arquivo)}" ajax="true"
+												process="@this" update="form:panelGridArquivo form:messages">
+											</p:commandButton>
+										</p:panelGrid>
+										<p:panelGrid columns="2" columnClasses="ui-lg-6 ui-g-6 ui-sm-6 ui-xs-6, 
+											ui-lg-6 ui-g-6 ui-sm-6 ui-xs-6"
+											style="width: 100%;" rendered="#{arquivo.arquivoCorrompido}">
+											<h:outputText value="#{msg['error.arquivocorrompido']}"
+												styleClass="ui-message-error ui-message-arquivo-corrompido" />
+											<p:commandButton icon="fa fa-close" styleClass="cancelar"
+												actionListener="#{arquivoBean.excluirArquivo(arquivo)}" ajax="true"
+												process="@this" update="form:panelGridArquivo form:messages">
+											</p:commandButton>
+										</p:panelGrid>
+									</p:panelGrid>
+								</p:repeat>
+							</p:panelGrid>
+						</p:scrollPanel>
+					</p:panelGrid>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+	</ui:define>
+</ui:composition>

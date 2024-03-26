@@ -1,0 +1,1 @@
+Code sample just for example. Not the final version cause of security reasons

@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.ui-fileupload-buttonbar .ui-button .ui-button-text {
+	display: inline-block !important;
+}
+
+.panelGridNoPadding {
+	padding: 0px;
+}
+
+.panelGridMaxHeight {
+	max-height: 69px;
+}
+
+.panelGridArquivo .panelGridMaxHeight:not(:last-child) {
+	border-bottom: none;
+}
+
+.panelGridMaxHeight .ui-panelgrid-content, 
+.panelGridMaxHeight tr td {
+	height: 100%;
+}
+
+.ui-message-arquivo-corrompido {
+	font-size: 12px !important;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+	overflow: hidden !important;
+}
+
+.button-close-arquivo {
+	position: absolute !important; 
+	right: -20px; 
+	background-color: transparent !important; 
+	color: black !important; 
+	top: -13px;
+}

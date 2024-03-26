@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="br.gov.acrimat">
+		<jta-data-source>java:jboss/datasources/acrimat</jta-data-source>
+		<class>br.gov.acrimat.model.Usuario</class>
+		<class>br.gov.acrimat.model.Associado</class>
+		<class>br.gov.acrimat.model.Telefone</class>
+		<class>br.gov.acrimat.model.Estado</class>
+		<class>br.gov.acrimat.model.Municipio</class>
+		<class>br.gov.acrimat.model.Arquivo</class>
+		<class>br.gov.acrimat.model.MunicipioAtividade</class>
+		<class>br.gov.acrimat.model.Relatorio</class>
+		<class>br.gov.acrimat.model.OpcaoRelatorio</class>
+		<class>br.gov.acrimat.model.Regiao</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="hibernate.show_sql" value ="false" />
+			<property name="hibernate.jdbc.time_zone" value="UTC"/>
+		</properties>
+	</persistence-unit>
+</persistence>

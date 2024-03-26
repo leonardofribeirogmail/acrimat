@@ -1,0 +1,153 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pe="http://primefaces.org/ui/extensions" lang="pt-br">
+
+	<f:loadBundle basename="message" var="msg" />
+	<h:outputStylesheet library="css" name="endereco.css"/>
+	<h:outputScript library="javascript" name="endereco.js"/>
+	
+	<p:messages for="panelGridEndereco" globalOnly="true"
+		id="messagesEndereco"/>
+
+	<p:panelGrid style="width: 100%;" id="panelGridEndereco">
+		<p:row>
+			<p:column>
+				<h:outputLabel value="Cep:" />
+			</p:column>
+			<p:column>
+				<h:panelGroup style="width: 100%;position:relative;" layout="block">
+					<p:defaultCommand target="commandButtonBuscaEndereco"/>
+					<p:inputMask value="#{associadoBean.associado.cep}"
+						disabled="#{!associadoBean.associado.editMode}"
+						mask="99999-999" maxlength="9" autoClear="true"
+						id="inputMaskCep"/>
+					<p:commandButton icon="fa fa-search" ajax="true"
+						update="messagesEndereco @(.updateEndereco)" disabled="#{!associadoBean.associado.editMode}"
+						action="#{associadoBean.buscarEnderecoPorCep}" id="commandButtonBuscaEndereco"
+						process="@this inputMaskCep" styleClass="commandButtonBuscaEndereco"/>
+					<p:tooltip for="commandButtonBuscaEndereco" value="#{msg['info.consultarcep']}"/>			
+				</h:panelGroup>
+			</p:column>
+			<p:column>
+				<h:outputLabel value="Estado:" />
+			</p:column>
+			<p:column>
+				<p:selectOneMenu disabled="#{!associadoBean.associado.editMode}"
+					value="#{associadoBean.associado.estado}" styleClass="updateEndereco">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione..."
+						itemValue="#{null}"/>
+					<f:selectItems value="#{associadoBean.estados}" var="estado"
+						itemLabel="#{estado.nome}" itemValue="#{estado.nome}"/>
+					<p:ajax event="change" process="@this" 
+						update="selectOneMenuMunicipio selectOneMenuMunicipioAtividade"
+						listener="#{associadoBean.listarMunicipioPorEstado}"/>
+				</p:selectOneMenu>
+			</p:column>
+			<p:column>			
+				<h:outputLabel value="Município:" />
+			</p:column>
+			<p:column>
+				<p:selectOneMenu disabled="#{!associadoBean.associado.editMode}"
+					value="#{associadoBean.associado.municipio}" styleClass="updateEndereco"
+					id="selectOneMenuMunicipio" converter="genericConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione..."
+						itemValue="#{null}"/>
+					<f:selectItems value="#{associadoBean.municipios}" var="municipio"
+						itemLabel="#{municipio.nome}" itemValue="#{municipio}"/>
+				</p:selectOneMenu>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputLabel value="Endereço para correspondência:" />
+			</p:column>
+			<p:column colspan="5">
+				<p:inputText value="#{associadoBean.associado.endereco}" 
+					disabled="#{!associadoBean.associado.editMode}"
+					styleClass="updateEndereco"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputLabel value="Complemento:"/>
+			</p:column>
+			<p:column colspan="3">
+				<p:inputText value="#{associadoBean.associado.complemento}" 
+					disabled="#{!associadoBean.associado.editMode}"/>
+			</p:column>
+			<p:column colspan="2">
+				<p:panelGrid styleClass="ui-panelgrid-blank" style="width: 100%;" columns="2">
+					<h:outputLabel value="Bairro:" />
+					<p:inputText value="#{associadoBean.associado.bairro}"
+						disabled="#{!associadoBean.associado.editMode}"
+						styleClass="updateEndereco"/>
+				</p:panelGrid>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputLabel value="Estado Referência:" />
+			</p:column>
+			<p:column colspan="5">
+				<h:outputLabel value="#{associadoBean.estadoReferencia.nome}" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputLabel value="Município de Atividade:" />
+			</p:column>
+			<p:column>
+				<p:selectOneMenu disabled="#{!associadoBean.associado.editMode}"
+					value="#{associadoBean.municipio}"
+					id="selectOneMenuMunicipioAtividade" converter="genericConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione..."
+						itemValue="#{null}"/>
+					<f:selectItems value="#{associadoBean.municipiosReferencia}" var="municipio"
+						itemLabel="#{municipio.nome}" itemValue="#{municipio}"
+						itemDisabled="#{associadoBean.compararMunicipioAtividade(municipio)}"/>
+					<p:ajax process="@this" update="selectOneMenuMunicipioAtividade panelGroupMunicipioAtividade"
+						listener="#{associadoBean.adicionarMunicipioAtividade}"/>
+				</p:selectOneMenu>
+			</p:column>
+			<p:column colspan="4">
+				<p:panelGrid columns="1" style="width: 100%;" columnClasses="ui-lg-12 ui-g-12 ui-sm-12" styleClass="ui-panelgrid-blank"
+					id="panelGridMunicipioAtividade">				
+					<h:panelGroup layout="block" id="panelGroupMunicipioAtividade" styleClass="panelGroupMunicipioAtividade">
+						<p:repeat var="municipioAtividade" value="#{associadoBean.associado.municipiosAtividade}"
+							varStatus="status">
+							<p:commandLink id="linkMunicipioAtividade" disabled="#{!associadoBean.associado.editMode}"
+								value="#{municipioAtividade.municipio.nome}" ajax="true" process="@this" global="false"
+								update="form:tabViewAssociado:overlayPanelMunicipioAtividade" onsuccess="PF('overlayPanelMA').show()">
+								<f:setPropertyActionListener value="#{municipioAtividade}" 
+									target="#{associadoBean.municipioAtividade}"/>
+								<f:setPropertyActionListener value="#{component.clientId}" 
+									target="#{associadoBean.overlayPanel.for}"/>
+							</p:commandLink>
+							<h:outputText value="," rendered="#{status.index lt (associadoBean.associado.municipiosAtividade.size() - 1)}"
+								styleClass="#{!associadoBean.associado.editMode ? 'ui-state-disabled' : ''}"/>
+							<p:spacer width="5"/>
+						</p:repeat>
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	
+	<p:overlayPanel widgetVar="overlayPanelMA" binding="#{associadoBean.overlayPanel}"
+		id="overlayPanelMunicipioAtividade" styleClass="overlaypanelMunicipioAtividade"
+		appendTo="body">
+		<p:panelGrid columns="1" style="width:100%;" styleClass="ui-panelgrid-blank">
+			<p:commandButton styleClass="cancelar commandButtonMunicipioAtividade" value="Remover"
+				ajax="true" process="@this" immediate="true" onsuccess="PF('overlayPanelMA').hide()"
+				update="form:tabViewAssociado:panelGridMunicipioAtividade form:tabViewAssociado:selectOneMenuMunicipioAtividade @this"
+				actionListener="#{associadoBean.associado.municipiosAtividade.remove(associadoBean.municipioAtividade)}">
+				<f:setPropertyActionListener value="" target="#{associadoBean.overlayPanel.for}"/>
+			</p:commandButton>
+		</p:panelGrid>
+	</p:overlayPanel>
+
+</ui:component>

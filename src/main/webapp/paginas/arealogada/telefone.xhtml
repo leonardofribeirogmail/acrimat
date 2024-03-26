@@ -1,0 +1,84 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pe="http://primefaces.org/ui/extensions" lang="pt-br">
+
+	<h:outputScript library="javascript" name="telefone.js" />
+	<f:loadBundle basename="message" var="msg" />
+		
+	<p:panelGrid id="panelGridTelefone" layout="grid" columns="1" columnClasses="ui-lg-12">
+		<p:defaultCommand target="commandButtonAdicionar"/>
+		<p:panelGrid layout="grid" columns="3" columnClasses="ui-lg-2 ui-g-2 ui-sm-6 ui-xs-6,
+		 ui-lg-2 ui-g-2 ui-sm-6 ui-xs-6, 
+		 ui-lg-3 ui-g-3 ui-sm-12 ui-xs-12">
+		 
+			<h:panelGrid columns="1" style="width: 100%;">		 
+				<p:selectOneMenu style="width: 100%;" value="#{associadoBean.telefone.tipoTelefone}" 
+					converter="tipoTelefoneConverter" styleClass="panelGridNovoTelefone" 
+					id="selectOneMenuTipoTelefone" disabled="#{!associadoBean.associado.editMode}">
+					<f:selectItem itemValue="#{null}" itemLabel="Selecione..."/>
+					<f:selectItems value="#{associadoBean.tipoTelefones}" var="tipoTelefone" 
+						itemValue="#{tipoTelefone}" itemLabel="#{tipoTelefone.nome}"/>
+					<p:ajax event="change" process="@this" update="@(.panelGridNovoTelefone) @(.ui-message)"
+						global="false" immediate="true"/>
+				</p:selectOneMenu>
+				<p:message for="#{component.parent.children.get(0).clientId}"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width: 100%;">
+				<p:inputMask style="width: 100%;" mask="#{associadoBean.telefone.tipoTelefone.mascara}" 
+			 		value="#{associadoBean.telefone.numero}" required="true" styleClass="panelGridNovoTelefone inputMaskTelefone"
+			 		disabled="#{empty associadoBean.telefone.tipoTelefone.mascara ? true : false}"
+			 		requiredMessage="#{msg['error.campoobrigatorio']}"/>
+			 	<p:message for="#{component.parent.children.get(0).clientId}"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width: 100%;">	
+				<p:commandButton value="Adicionar" ajax="true" actionListener="#{associadoBean.adicionarTelefone}"
+					process="@this @(.panelGridNovoTelefone)" update="@(.panelGridNovoTelefone) @(.ui-message)"
+					disabled="#{!associadoBean.associado.editMode}" id="commandButtonAdicionar" 
+					styleClass="commandButtonAdicionar"/>
+			</h:panelGrid>
+		</p:panelGrid>
+		
+		<p:outputPanel styleClass="panelGridNovoTelefone" deferredMode="load" deferred="true">
+			<p:repeat var="telefone" value="#{associadoBean.associado.telefones}">
+				<p:panelGrid layout="grid" columns="3" columnClasses="ui-lg-2 ui-g-2 ui-sm-6 ui-xs-6,
+				 ui-lg-2 ui-g-2 ui-sm-6 ui-xs-6, 
+				 ui-lg-3 ui-g-3 ui-sm-12 ui-xs-12">
+				 
+					<h:panelGrid columns="1" style="width: 100%;">		 
+						<p:selectOneMenu style="width: 100%;" value="#{telefone.tipoTelefone}" 
+							converter="tipoTelefoneConverter" disabled="#{!associadoBean.associado.editMode}">
+							<f:selectItems value="#{associadoBean.tipoTelefones}" var="tipoTelefone" 
+								itemValue="#{tipoTelefone}" itemLabel="#{tipoTelefone.nome}"/>
+							<p:ajax event="change" process="@this"
+								global="false" immediate="true"/>
+						</p:selectOneMenu>
+						<p:message for="#{component.parent.children.get(0).clientId}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="width: 100%;">
+						<p:inputMask style="width: 100%;" mask="#{telefone.tipoTelefone.mascara}" 
+					 		value="#{telefone.numero}" required="true"
+					 		disabled="#{!associadoBean.associado.editMode or empty telefone.tipoTelefone.mascara ? true : false}"
+					 		requiredMessage="#{msg['error.campoobrigatorio']}"/> 
+					 	<p:message for="#{component.parent.children.get(0).clientId}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="width: 100%;">								
+						<p:commandButton icon="fa fa-close" ajax="true" styleClass="cancelar"
+							process="@this" disabled="#{!associadoBean.associado.editMode}"
+							update="@(.panelGridNovoTelefone)" 
+							actionListener="#{associadoBean.removerTelefone(telefone)}"/>
+					</h:panelGrid>
+				</p:panelGrid>
+			</p:repeat>
+		</p:outputPanel>
+	</p:panelGrid>
+</ui:component>
+
+	

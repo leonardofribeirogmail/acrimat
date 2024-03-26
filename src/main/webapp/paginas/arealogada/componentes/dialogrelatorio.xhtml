@@ -1,0 +1,112 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<h:outputStylesheet library="css" name="relatorio.css"/>
+	<h:outputScript library="javascript" name="relatorio.js"/>
+
+	<p:dialog dynamic="true" draggable="true" id="dialogrelatorio"
+		widgetVar="dialogrelatorio" resizable="true" closeOnEscape="true" 
+		header="Relatorio" responsive="true" onHide="retornarLoading(); onResize(); $('.dialogContainer').hide();"
+		style="max-width: 95%;max-height:95%;" 
+		onShow="setarLoadingRelatorio(); $('.dialogContainer').show(); onResize();">
+		
+		<div style="height:400px;overflow-y:auto;">
+			<p:messages globalOnly="true" for="panelGridRelatorio"/>
+			
+			<p:panelGrid columns="1" layout="grid" style="width: 100%;" id="panelGridRelatorio" 
+				binding="#{relatorioBean.panelGridRelatorio}">
+				<p:panelGrid columns="1" style="width: 100%;" layout="flex">
+					<h:panelGrid columns="2" style="width: 100%;">
+						<h:outputText value="Região de Atividade:" />
+						<p:selectOneMenu value="#{relatorioBean.regiaoDTO}" style="width: 100%;"
+								id="selectOneMenuRegiaoAtividade" converter="genericConverter">
+							<f:selectItem itemLabel="Selecione..." itemValue="#{null}"/>
+							<f:selectItems value="#{relatorioBean.regiaoBean.listaRegiaoDto}" var="regiao"
+								itemLabel="#{regiao.nome}" itemValue="#{regiao}"/>
+							<p:ajax process="@this" update="selectOneMenuMunicipioAtividade" global="false"
+								resetValues="true" listener="#{relatorioBean.filtrarMunicipioAtividade}"/>
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<h:panelGrid columns="1" style="width: 100%;" id="panelGridMunicipioAtividadeComponent">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<h:panelGrid columns="2" style="width: 100%;">
+								<h:outputText value="Município de Atividade:" />
+								<p:selectOneMenu value="#{relatorioBean.municipioAtividade}"
+									id="selectOneMenuMunicipioAtividade" converter="genericConverter"
+									style="width: 100%;">
+									<f:selectItem itemLabel="Selecione..." itemValue="#{null}"/>
+									<f:selectItems value="#{relatorioBean.municipiosFiltrados}" var="municipio"
+										itemLabel="#{municipio.nome}" itemValue="#{municipio}"/>
+									<p:ajax process="@this" update="panelGridMunicipioAtividadeComponent" global="false"/>
+								</p:selectOneMenu>
+								<p:message for="selectOneMenuMunicipioAtividade"/>
+							</h:panelGrid>
+						</h:panelGrid>
+						<h:panelGrid columns="1" style="width: 100%;">
+							<h:panelGrid columns="2" style="width: 100%;">
+								<h:outputText value="Status:" />
+								<p:selectOneMenu value="#{relatorioBean.statusAssociado}"
+									id="selectOneMenuStatusAssociado" converter="statusAssociadoConverter"
+									style="width: 100%;">
+									<f:selectItems value="#{relatorioBean.statusList}" var="statusAssociado"
+										itemLabel="#{statusAssociado.nome}" itemValue="#{statusAssociado}"/>
+									<p:ajax process="@this" global="false"/>
+								</p:selectOneMenu>
+								<p:message for="selectOneMenuStatusAssociado"/>
+							</h:panelGrid>
+						</h:panelGrid>
+						<p:panelGrid styleClass="ui-panelgrid-blank" columns="3" style="width: 100%;">
+							<h:outputLabel value="Data de Filiação:" />
+							<h:panelGrid columns="2" style="width:100%;">
+								<p:outputLabel value="De" style="margin-right:5px;"/>
+								<p:calendar value="#{relatorioBean.dtInicialAssociado}"
+									id="periodoInicial" mask="true" pattern="dd/MM/yyyy"
+									locale="pt" readonlyInput="true" navigator="true"
+									placeholder="99/99/9999">
+								</p:calendar>
+							</h:panelGrid>
+							<h:panelGrid columns="2" style="width:100%;">
+								<p:outputLabel value="Até" style="margin-right:5px;"/>
+								<p:calendar value="#{relatorioBean.dtFinalAssociado}"
+									id="periodoFinal" mask="true" pattern="dd/MM/yyyy"
+									locale="pt" readonlyInput="true" navigator="true"
+									placeholder="99/99/9999">
+								</p:calendar>
+							</h:panelGrid>
+						</p:panelGrid>
+					</h:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="1" layout="grid" style="width: 100%;" styleClass="ui-panelgrid-blank">			
+					<p:selectManyCheckbox columns="4" value="#{relatorioBean.opcoesRelatorio}"
+						layout="grid" converter="opcaoConverter" styleClass="selectManyCheckBoxOpcao"
+						widgetVar="selectManyCheckBoxOpcao" onclick="marcarDesmarcar.init();">
+						<f:selectItems value="#{relatorioBean.opcoes}" var="opcao"
+							itemLabel="#{opcao.nome}" itemValue="#{opcao}"/>
+					</p:selectManyCheckbox>
+				</p:panelGrid>
+				
+				<f:facet name="footer">
+					<p:commandButton value="Imprimir" ajax="false" styleClass="commandButtonImprimir"
+						disabled="#{relatorioBean.opcoesRelatorio.size() le 0}" actionListener="#{relatorioBean.salvarOpcoes}"
+						onclick="PrimeFaces.monitorDownload(PF('blockUIDatatable').block(), monitor.stop())">
+						<p:fileDownload value="#{relatorioBean.imprimirRelatorio}"/>
+					</p:commandButton>
+				</f:facet>
+			</p:panelGrid>
+		</div>
+		
+		
+	</p:dialog>
+
+</ui:component>
+
+
+

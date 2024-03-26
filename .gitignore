@@ -1,0 +1,13 @@
+.project
+.classpath
+.settings
+.factorypath
+.tern-project
+.DS_Store
+*.DS_Store
+*/.DS_Store
+target*
+*target*
+target/
+/target/
+/bin/

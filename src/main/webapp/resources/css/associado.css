@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+.ui-layout-unit-content {
+	overflow: hidden !important;
+}
+
+.divBlockDataTable {
+	display: none;
+	background-color: rgb(0, 0, 0);
+    opacity: 0.6;
+    position: absolute;
+    background: #000000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.loading {
+	position: absolute;
+    z-index: 1;
+    bottom: -1px;
+    right: 0px;
+    width: 37px;
+}
+
+.loading.hidden {
+	display: none;
+}
+
+.labelStatus {
+	margin: 10px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    height: 37px;
+}
+
+.ui-inputfield {
+	width: 100%;
+}
+
+.columnFiltrar {
+	padding: 0 !important;
+	margin: 0;
+}
+
+.ui-column-filter {
+	display: none !important;
+}
+
+.outputPanelSwitch {
+	margin: auto;
+    width: 50%;
+}
+
+.commandButtonAdicionarTelefone {
+	width:125px; 
+	float:right; 
+	margin-top: 3px !important;
+	margin-right: 12px !important; 
+}
+
+.linkArquivos {
+	width: 50%;
+    margin: auto;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background: rgb(185,185,185);
+    background: linear-gradient(0deg,rgba(185,185,185,1) 0%, rgba(240,240,240,1) 100%);
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    text-shadow: 0 0 5px white;
+}
+
+.commandLinkPerspectiva {
+    left: 9px;
+    color: #f03a2a;
+    bottom: 23px;
+}
+
+.commandLinkPerspectiva:hover {
+	color: #dd2113;
+}
+
+.ui-datatable-footer div:not(.panelGridFilho) {
+	height: 100%;
+	padding: 0px !important;
+}
+
+.panelGridFooter {
+	position: relative;
+}
+
+.panelGridFooter .ui-panelgrid .ui-panelgrid-cell {
+	padding: 0px !important;
+}
+
+.ui-datatable-footer {
+	height: 50px;
+	padding: 0px !important;
+}
+
+.panelGridExportar {
+	position: absolute;
+    top: -3px;
+    left: 8px;
+}
+
+.panelGridTotal {
+	position: absolute;
+    right: 20px;
+    top: -3px;
+}
+
+span.linhaeven {
+	color: #337ab7;
+}
+
+.ui-lightbox-nav-right {
+	display: none !important;
+}
+
+.commandLinkRelatorio {
+	color: green;
+	font-weight: bold;
+}
+
+.commandLinkRelatorio:hover {
+	color: #30A700 !important;
+}
+
+.associado-header button,
+.associado-header table {
+	display: block;
+}
+
+.selectOneMenufiltroRegiao {
+	display: flex;
+	width: fit-content;
+	
+}

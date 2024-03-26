@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+body, .ui-layout-unit, .ui-layout-unit-content  {
+	border: 0 !important;
+	padding: 0 !important;
+    background: linear-gradient(220deg, rgba(39,55,71,1) 0%, rgba(59,119,179,1) 60%, rgba(1,166,186,0.5) 100%);
+}
+
+.dialog {
+	max-width: 380px;
+}
+
+.logo {
+    height: auto;
+	max-width: 100%;
+}
+
+.ui-inputfield, label {
+	height: 30px;
+	width: 100%;
+	font-size: 16px !important;
+}
+
+.ui-inputfield {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	padding-top: 4px !important;
+	padding-bottom: 4px !important;
+} 
+
+.corpo-dialog {
+	width: auto;
+}
+
+button.wait {
+	width: 95px;
+}
+
+button.wait span {
+	text-align: center;
+	padding: .3em 0em !important;
+}
+
+button.wait span {
+	color: #07889b;
+}
+
+.panelGridButtonEntrar tr td {
+	padding: 0 !important;
+}
+
+.panelGridButtonEntrar tr td:last-child {
+	text-align: right;
+	font-size: 10px;
+}

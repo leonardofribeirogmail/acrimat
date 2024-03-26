@@ -1,0 +1,185 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pe="http://primefaces.org/ui/extensions" lang="pt-br">
+
+	<f:loadBundle basename="message" var="msg" />
+
+	<p:messages for="panelGridParentAssociado" globalOnly="true"
+		id="messagesPanelGridAssociadoViewer"/>
+		
+	<p:panelGrid style="width: 100%;" id="panelGridParentAssociado"
+		styleClass="panelGridParentAssociado">
+		<p:row styleClass="panelGridParentAssociado-row">
+			<p:column styleClass="panelGridParentAssociado-column">
+				<p:panelGrid style="width:100%;" id="panelGridAssociado" 
+					styleClass="panelGridAssociado">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputLabel value="Nome:" />
+						</p:column>
+						<p:column colspan="4">
+							<p:inputText value="#{associadoBean.associado.nome}"
+								disabled="#{!associadoBean.associado.editMode}"
+								required="true" requiredMessage="#{msg['error.campoobrigatorio']}"/>
+							<p:message for="#{component.parent.children.get(0).clientId}"
+								rendered="#{associadoBean.associado.editMode}"/>
+						</p:column>
+						<p:column colspan="2">
+							<p:outputPanel id="outputPanelSwitch" styleClass="outputPanelSwitch">
+								<div jsf:id="div-onoffswitch"
+									class="onoffswitch #{associadoBean.associado.editMode ? '' : 'disabled'}
+									#{associadoBean.associado.ativo ? '' : 'onoffswitch-inativo'}" 
+									jsf:rendered="true">
+								    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+								    	id="myonoffswitch" tabindex="0" jsf:rendered="true" 
+								    	jsf:value="#{associadoBean.associado.ativo}"
+								    	jsf:disabled="#{!associadoBean.associado.editMode}">
+								    	<f:ajax execute="@this" render="outputPanelSwitch"/>
+								    </input>
+								    <label class="onoffswitch-label" for="myonoffswitch">
+								        <span class="onoffswitch-inner"></span>
+								        <span class="onoffswitch-switch"></span>
+								    </label>
+								</div>
+							</p:outputPanel>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputLabel value="RG/ OE. UF:" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{associadoBean.associado.rg}"
+								disabled="#{!associadoBean.associado.editMode}" />
+						</p:column>
+						<p:column>
+							<p:selectOneRadio value="#{associadoBean.cnpj}"
+								disabled="#{!associadoBean.associado.editMode}">
+								<f:selectItem itemLabel="CPF" itemValue="false"/>
+								<f:selectItem itemLabel="CNPJ" itemValue="true"/>
+								<p:ajax event="change" process="@this" update="inputMaskCpfCnpj"
+									global="false"/>
+							</p:selectOneRadio>
+						</p:column>
+						<p:column>
+							<p:inputMask value="#{associadoBean.associado.cpfCnpj}"
+								disabled="#{!associadoBean.associado.editMode}"
+								mask="#{associadoBean.cnpj ? '99.999.999/9999-99' : '999.999.999-99'}"
+								id="inputMaskCpfCnpj" required="true" requiredMessage="#{msg['error.campoobrigatorio']}"
+								converter="onlyNumbersConverter"/>
+							<p:message for="#{component.parent.children.get(0).clientId}"
+								rendered="#{associadoBean.associado.editMode}"/>
+						</p:column>
+						<p:column>
+							<h:outputLabel value="Data de nascimento:" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputMask value="#{associadoBean.associado.dataNascimento}"
+								disabled="#{!associadoBean.associado.editMode}"
+								mask="99/99/9999">			
+								<f:convertDateTime pattern="dd/MM/yyy"/>
+							</p:inputMask>
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Sexo:" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{associadoBean.associado.sexo}"
+								disabled="#{!associadoBean.associado.editMode}" />
+						</p:column>
+						<p:column>
+							<h:outputLabel value="Data de filiação:" />
+						</p:column>
+						<p:column>
+							<p:inputMask value="#{associadoBean.associado.dataFiliacao}"
+								disabled="#{!associadoBean.associado.editMode}"
+								required="true" requiredMessage="#{msg['error.campoobrigatorio']}"
+								mask="99/99/9999">							
+								<f:convertDateTime pattern="dd/MM/yyy"/>
+							</p:inputMask>
+							<p:message for="#{component.parent.children.get(0).clientId}"
+								rendered="#{associadoBean.associado.editMode}"/>
+						</p:column>
+						<p:column colspan="3">
+							<p:panelGrid style="width: 100%;" styleClass="ui-panelgrid-blank">
+								<p:row>
+									<p:column>
+										<h:outputLabel value="E-mail:" />
+									</p:column>
+									<p:column>
+										<p:inputText value="#{associadoBean.associado.email}"
+											disabled="#{!associadoBean.associado.editMode}"/>	
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+							
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Motivo não associado:" />
+						</p:column>
+						<p:column colspan="#{associadoBean.associado.id gt 0 eq false ? 6 : 3}">
+							<p:inputTextarea style="width:100%;"
+								value="#{associadoBean.associado.motivonaoassociado}"
+								disabled="#{!associadoBean.associado.editMode}"/>
+						</p:column>
+						<p:column colspan="3" rendered="#{associadoBean.associado.id gt 0}">
+							<p:commandLink value="Arquivos" styleClass="linkArquivos" immediate="true"
+								process="@this" update="form:dialogArquivo" 
+								actionListener="#{arquivoBean.popularAssociado(associadoBean.associado.id)}"
+								oncomplete="PF('dialogArquivo').show();"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:column>
+		</p:row>
+
+		<f:facet name="footer">
+			<p:row styleClass="panelGridParentAssociado-row">
+				<p:column colspan="4" styleClass="panelGridParentAssociado-column">
+					<p:commandButton value="Cancelar" style="float:right;" styleClass="cancelar" ajax="true"
+						rendered="#{associadoBean.associado.editMode}" global="false"
+						process="@this" immediate="true" update="panelGridParentAssociado panelGridEndereco panelGridTelefone"
+						actionListener="#{associadoBean.mensagemQuandoEditarCancelar}">
+						<f:setPropertyActionListener value="#{not associadoBean.associado.editMode}"
+							target="#{associadoBean.associado.editMode}" />
+					</p:commandButton>
+					<p:commandButton value="Salvar" style="float:right;" 
+						process="panelGridParentAssociado panelGridEndereco"
+						rendered="#{associadoBean.associado.editMode}" ajax="true"
+						styleClass="salvar" actionListener="#{associadoBean.salvar}"
+						update="form:dataTable panelGridParentAssociado messagesPanelGridAssociadoViewer panelGridTelefone
+						panelGridEndereco"/>
+					<p:commandButton value="Fechar" rendered="#{not associadoBean.associado.editMode}"
+						type="button" style="float:right;" styleClass="cancelar" onclick="PF('dialog').hide();"/>
+					<p:commandButton value="Editar" styleClass="editar"
+						update="panelGridParentAssociado panelGridEndereco panelGridTelefone" 
+						rendered="#{not associadoBean.associado.editMode}"
+						process="#{associadoBean.associado.editMode ? 'panelGridParentAssociado':'@this'}" style="float:right;"
+						actionListener="#{associadoBean.mensagemQuandoEditarCancelar}">
+						<f:setPropertyActionListener value="#{not associadoBean.associado.editMode}" 
+							target="#{associadoBean.associado.editMode}" />
+					</p:commandButton>
+					<p:commandButton value="Sefaz" process="@this" 
+						update="form:dialog" immediate="true"
+						oncomplete="PF('dialog').show();onCloseSefaz.ativar()" 
+						rendered="#{associadoBean.associado.id gt 0}">
+						<f:setPropertyActionListener value="true" target="#{associadoBean.sefaz}"/>
+						<f:setPropertyActionListener value="#{associadoBean.associado.cpfCnpj}" 
+							target="#{sefazBean.cpfCnpj}"/>	
+					</p:commandButton>
+				</p:column>
+			</p:row>
+		</f:facet>
+	</p:panelGrid>
+
+</ui:component>

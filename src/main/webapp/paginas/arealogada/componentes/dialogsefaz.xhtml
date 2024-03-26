@@ -1,0 +1,99 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<h:outputStylesheet library="css" name="sefaz.css"/>
+	<h:outputScript library="javascript" name="sefaz.js" />
+
+	<p:outputPanel id="outputPanelFormularioMaster"
+		binding="#{sefazBean.outPutPanelMaster}"
+		rendered="#{not empty sefazBean.outPutPanelMaster}">
+		
+		<p:remoteCommand process="@this" autoRun="true" immediate="true"
+			actionListener="#{sefazBean.recarregarPagina}"
+			update="@(.atualizarComponenteSefaz) form:panelGridImagem form:outputPanelDocumentoSefaz"/>
+
+		<p:message for="panelGridSefaz"/>
+		<p:panelGrid styleClass="ui-panelgrid-blank" id="panelGridSefaz">
+			<p:row>
+				<p:column>
+					<h:outputText value="CPF" styleClass="atualizarComponenteSefaz"
+						rendered="#{sefazBean.cpfCnpj.length() eq 14}" />
+					<h:outputText value="CNPJ" styleClass="atualizarComponenteSefaz"
+						rendered="#{sefazBean.cpfCnpj.length() gt 14}" />
+				</p:column>
+				<p:column>
+					<p:inputMask placeholder="999.999.999-99" required="true"
+						mask="999.999.999-99" value="#{sefazBean.cpfCnpj}"
+						requiredMessage="CPF não digitado" disabled="true"
+						rendered="#{sefazBean.cpfCnpj.length() eq 14}" 
+						styleClass="atualizarComponenteSefaz"/>
+					<p:inputMask placeholder="99.999.999/9999-99" required="true"
+						mask="99.999.999/9999-99" value="#{sefazBean.cpfCnpj}"
+						requiredMessage="CNPJ não digitado" disabled="true"
+						rendered="#{sefazBean.cpfCnpj.length() gt 14}" 
+						styleClass="atualizarComponenteSefaz"/>
+					<p:message for="#{component.parent.children.get(0).clientId}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:panelGrid styleClass="ui-panelgrid-blank" columns="2" style="width:100%;"
+						id="panelGridImagem">						
+						<o:graphicImage value="#{sefazBean.imagem}" dataURI="true" id="imagem"
+							rendered="#{not empty sefazBean.imagem}"/>
+						<p:commandButton process="@this" icon="fa fa-refresh"
+							immediate="true" update="form:outputPanelFormularioMaster"/>
+					</h:panelGrid>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:panelGrid style="width: 100%;" columns="1">
+						<p:panelGrid style="width:100%;" styleClass="ui-panelgrid-blank" columns="2">
+							<p:inputText placeholder="Digite o código da imagem"
+								required="true" style="width: 100%;" id="imagemDigitada"
+								value="#{sefazBean.imagemDigitada}" styleClass="atualizarComponenteSefaz"
+								requiredMessage="Digite a imagem corretamente" />
+							<p:commandButton value="Enviar" process="@form"
+								update="#{sefazBean.outPutPanelMaster.clientId}"
+								actionListener="#{sefazBean.consultar}" 
+								oncomplete="PF('dialog').resetPosition()"/>
+						</p:panelGrid>
+						<p:message for="form:imagemDigitada" />
+					</h:panelGrid>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		
+		<p:repeat var="usuario" value="#{sefazBean.usuariosSefaz}">
+			<p:panelGrid columns="3" styleClass="ui-panelgrid-blank atualizarComponenteSefaz" style="width:100%;">
+				<p:commandLink value="IE: #{usuario.inscricaoEstadual}" ignoreAutoUpdate="true"
+					type="button" onclick="submeterInscricaoEstadual('#{usuario.inscricaoEstadual}');"/>
+				<h:outputText value="Nome: #{usuario.nome}" />
+				<p:outputPanel layout="inline">
+					Status: <p:outputPanel layout="inline"
+						styleClass="#{usuario.status eq 'Ativo' ? 'status-ativo' : 'status'}">#{usuario.status}</p:outputPanel>
+				</p:outputPanel>
+			</p:panelGrid>
+		</p:repeat>
+
+		<p:outputPanel id="outputPanelDocumentoSefaz">
+			<h:form pt:action="#{sefazBean.urlSefaz}" target="_blank" styleClass="formSubmitDocumentoSefaz">
+				<input type="hidden" name="numrDoct" class="numrDoct"/>
+				<input type="hidden" name="pagn" value="FormularioListaEnviar" />
+			</h:form>
+		</p:outputPanel>
+	</p:outputPanel>
+</ui:component>
+
+
+

@@ -1,0 +1,273 @@
+@charset "UTF-8";
+
+.ui-selectonemenu {
+	padding-right: 24px !important;
+}
+
+.dialog {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 0;
+	background-color: white;
+	transform: translate(-50%, -50%);
+	border: 1px solid rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .dialog {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.dialog .content {
+  	width: 90%;
+	margin: auto;
+  	padding: 10px;
+}
+
+.ui-button {
+	font-size: 20px !important;
+}
+
+.ui-icon {
+	font-size: 15px !important;
+}
+
+.novo {
+    background: #2196F3 !important;
+    color: #ffffff !important;
+    border: 1px solid #2196F3 !important;
+    margin: 0;
+    outline: 0 none;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.salvar, .ui-confirmdialog-yes {
+	color: white !important;
+	background: #267e07 !important;
+}
+
+.editar {
+	background: #01a6ba !important;
+	color: white !important;
+	text-shadow: 0px 0px 3px rgb(0 0 0 / 50%);
+}
+
+.cancelar, .mensagemErro, .excluir, .ui-confirmdialog-no {
+	color: white !important;
+	background: #850505 !important;
+}
+
+.erro {
+	color: red;
+	font-weight: bold;
+}
+
+.novo.ui-button:hover {
+	background: #1284de !important;
+}
+
+.cancelar:hover {
+	background: #a10404 !important;
+}
+
+.salvar:hover {
+	background: #2d9609 !important;
+}
+
+.editar:hover {
+	background: #01bbd1 !important;
+}
+
+.ui-state-focus, .ui-widget-content .ui-state-focus, 
+.ui-widget-header .ui-state-focus {
+	outline: transparent !important;
+}
+
+.ui-inputfield.ui-state-error, .ui-widget-header .ui-inputfield.ui-state-error, 
+.ui-widget-content .ui-inputfield.ui-state-error {
+	color: #f90400;
+	border: 1px solid #f90400;
+	background-color: white;
+}
+
+.ui-state-highlight .ui-icon {
+	background-image: url(/acrimat/javax.faces.resource/images/ui-icons_333333_256x240.png.xhtml?ln=primefaces-bootstrap) !important;
+}
+
+.ui-messages-error, .ui-message-error {
+    color: #f90400 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    font-size: 16px !important;
+}
+
+.ui-messages ul,
+.ui-messages span,
+.ui-messages-error,
+.ui-messages-info-detail, .ui-messages-warn-detail, 
+.ui-messages-error-detail, .ui-messages-fatal-detail, 
+.ui-message-info-detail, .ui-message-warn-detail, 
+.ui-message-error-detail, .ui-message-fatal-detail,
+.ui-message-info, .ui-message-error, .ui-message-warn, .ui-message-fatal {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-left: 0px !important;
+}
+
+.ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, 
+.ui-messages-fatal-icon, .ui-message-info-icon, 
+.ui-message-warn-icon, .ui-message-error-icon, .ui-message-fatal-icon {
+	display: none !important;
+}
+
+.blockUI.blockOverlay {
+	z-index: 9999 !important;
+}
+
+.blockUI.blockMsg {
+	z-index: 10000 !important;
+}
+
+.dialogContainer {
+	display: none;
+	position: fixed;
+	z-index: 1003;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(255,255,255,0.7);
+	backdrop-filter: blur(3px);
+}
+
+.onoffswitch.disabled {
+	opacity: 0.3;
+}
+
+.onoffswitch {
+    position: relative; width: 90px;
+    background-color: #2196F3;
+    border-radius: 20px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch-inativo {
+	background-color: #707070 !important;
+}
+
+.onoffswitch-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Ativo";
+    padding-left: 10px;
+    background-color: #2196F3; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "Inativo";
+    padding-right: 10px;
+    background-color: #707070; 
+    color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+input.ui-inputfield, .ui-selectonemenu {
+	height: 37px;
+}
+
+label.ui-inputfield {
+	height: 23px;
+}
+
+.ui-selectonemenu label {
+	height: 12px;
+    margin-top: 3px;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon-triangle-1-s {
+	margin-top: 10px !important;
+}
+
+.ui-datagrid-column {
+	padding: 0px !important;
+}
+
+.ui-selectonemenu.ui-state-disabled,
+.ui-selectonemenu.ui-state-disabled label {
+	background-color: #eeeeee !important;
+	opacity: 1 !important;
+}
+
+.ui-fileupload-buttonbar .ui-button {
+	font-size: 2px !important;
+}
+
+.ui-fileupload-buttonbar .ui-button .ui-button-text {
+	font-size: 13px !important;
+}
+
+.dialogException {
+	z-index: 2000 !important;
+}
+
+.hidden {
+	display: none;
+}
+
+.delete-icon {
+	background-image: url('resources/imagens/delete.png');
+}
+
+.com-borda {
+	border: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+.sem-borda {
+	border: 0 !important;
+}
+
+body .ui-datatable .ui-datatable-header {
+	padding: 0px;
+}
+
+.ui-button-icon-only {
+	width: 35px !important;
+}

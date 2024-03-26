@@ -1,0 +1,11 @@
+@charset "ISO-8859-1";
+
+.status {
+	color:red;
+	font-weight: bold;
+}
+
+.status-ativo {
+	color:green;
+	font-weight: bold;
+}

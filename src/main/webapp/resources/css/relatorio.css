@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+.loading-relatorio {
+	width: 37px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.panelgrid-selecionar {
+	height: 36px;
+	padding-left: 4px;
+}
+
+.commandButtonImprimir {
+	float: right;
+}
+
+.ui-panelgrid-footer.ui-widget-header {
+	height: 38px;
+}
+
+.onoffswitchrelatorio.disabled {
+	opacity: 0.3;
+}
+
+.onoffswitchrelatorio {
+    position: relative; width: 90px;
+    background-color: #2196F3;
+    border-radius: 20px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitchrelatorio-inativo {
+	background-color: #707070 !important;
+}
+
+.onoffswitchrelatorio-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.onoffswitchrelatorio-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitchrelatorio-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitchrelatorio-inner:before, .onoffswitchrelatorio-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitchrelatorio-inner:before {
+    content: "Ativo";
+    padding-left: 10px;
+    background-color: #2196F3; color: #FFFFFF;
+}
+.onoffswitchrelatorio-inner:after {
+    content: "Inativo";
+    padding-right: 10px;
+    background-color: #707070; 
+    color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitchrelatorio-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitchrelatorio-checkbox:checked + .onoffswitchrelatorio-label .onoffswitchrelatorio-inner {
+    margin-left: 0;
+}
+.onoffswitchrelatorio-checkbox:checked + .onoffswitchrelatorio-label .onoffswitchrelatorio-switch {
+    right: 0px; 
+}
+
+.onoffswitchrelatorio-inner:before {
+	content: "Município de Atividade" !important;
+}
+
+.onoffswitchrelatorio-inner:after {
+	content: "Telefone" !important;
+}
+
+.onoffswitchrelatorio {
+	width: 195px !important;
+}
+
+.onoffswitchrelatorio-inativo .onoffswitchrelatorio-switch {
+	right: 72px !important;
+}
+
+.onoffswitchrelatorio-inativo {
+	width: 108px !important;
+}
+
+.outputPanelSwitchRelatorio {
+	width: 25%;
+    right: 81px;
+}
+
+body .ui-datepicker {
+	width: auto;
+}

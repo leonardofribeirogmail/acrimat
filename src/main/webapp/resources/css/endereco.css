@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.overlaypanelMunicipioAtividade {
+	box-shadow: 0 1px 10px 5px rgb(0 0 0 / 25%) !important;
+}
+
+.overlaypanelMunicipioAtividade::before {
+	content: "";
+    position: absolute;
+    top: 6%;
+    margin-top: -13px;
+    left: 13px;
+    z-index: 1;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid white;
+}
+
+.commandButtonMunicipioAtividade {
+	font-size: 15px !important;
+}
+
+.panelGroupMunicipioAtividade {
+	width: 100%; 
+	overflow: auto; 
+	max-width: 550px;
+	height: 46px;
+}
+
+.commandButtonBuscaEndereco {
+	background-color: transparent !important;
+    color: #337ab7 !important;
+    position: absolute;
+    right: 0;
+}
